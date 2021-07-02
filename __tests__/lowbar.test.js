@@ -90,7 +90,7 @@ describe('#map', () => {
 	});
 });
 
-describe.only('#filter', () => {
+describe('#filter', () => {
 	test('if passed empty array or object - returns empty array', () => {
 		expect(_.filter({})).toEqual([]);
 		expect(_.filter([])).toEqual([]);
@@ -121,6 +121,29 @@ describe.only('#filter', () => {
 			const mockFn = jest.fn().mockImplementation((num) => !(num % 2));
 			const testArr = [1, 2, 3, 4, 5];
 			expect(_.filter(testArr, mockFn)).toEqual([2, 4]);
+			expect(mockFn).toHaveBeenCalledTimes(5);
 		});
 	});
+	describe('-- Side Effects --', () => {
+		test('should not mutate given collection', () => {
+			const testArr = [1, 2, 3, 4, 5];
+			const mockFn = jest.fn();
+			expect(_.filter(testArr, mockFn)).not.toBe(testArr);
+			expect(testArr).toEqual([1, 2, 3, 4, 5]);
+			const testObj = { one: 1, two: 2, three: 3 };
+			expect(_.filter(testObj, mockFn)).not.toBe(testObj);
+			expect(testObj).toEqual({ one: 1, two: 2, three: 3 });
+		});
+	});
+});
+
+describe.only('#forEach', () => {
+	test('should return the given collection', () => {
+		const inputObj = {};
+		const inputArr = [];
+		const mockFn = jest.fn();
+		expect(_.forEach(inputObj, mockFn)).toBe(inputObj);
+		expect(_.forEach(inputArr, mockFn)).toBe(inputArr);
+	});
+	test('given func should be invoked with each element in a collection', () => {});
 });
