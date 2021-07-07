@@ -26,17 +26,20 @@ _.map = (collection, func) => {
 	return input;
 };
 
-//---- Not yet working for objects ----//
 _.filter = (collection, predicate) => {
 	const filteredArr = [];
-
 	if (Array.isArray(collection)) {
 		for (let i = 0; i < collection.length; i++) {
 			if (predicate(collection[i])) filteredArr.push(collection[i]);
 		}
+		return filteredArr;
+	} else {
+		//---- Not yet working for objects ----//
+		for (const key in collection) {
+			if (predicate(collection[key])) filteredArr.push(collection[key]);
+		}
+		return filteredArr;
 	}
-
-	return filteredArr;
 };
 
 _.forEach = (collection) => {

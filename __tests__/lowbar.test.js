@@ -124,6 +124,15 @@ describe('#filter', () => {
 			expect(mockFn).toHaveBeenCalledTimes(5);
 		});
 	});
+	describe('-- Objects --', () => {
+		test('should return object with one property - predicate return true', () => {
+			const testPred = (person) => !(person.age % 2);
+			const testObj = { duncan: { favColour: 'red', age: 27 } };
+			expect(_.filter(testObj, testPred)).toEqual({
+				duncan: { favColour: 'red', age: 27 }
+			});
+		});
+	});
 	describe('-- Side Effects --', () => {
 		test('should not mutate given collection', () => {
 			const testArr = [1, 2, 3, 4, 5];
@@ -137,7 +146,7 @@ describe('#filter', () => {
 	});
 });
 
-describe.only('#forEach', () => {
+describe('#forEach', () => {
 	test('should return the given collection', () => {
 		const inputObj = {};
 		const inputArr = [];
