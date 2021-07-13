@@ -154,5 +154,38 @@ describe('#forEach', () => {
 		expect(_.forEach(inputObj, mockFn)).toBe(inputObj);
 		expect(_.forEach(inputArr, mockFn)).toBe(inputArr);
 	});
-	test('given func should be invoked with each element in a collection', () => {});
+	test('given func should be invoked once for each element of the collection', () => {
+		const inputArr = [1, 2, 3];
+		const inputObj = { one: 1, two: 2, three: 3 };
+		const mockFn1 = jest.fn();
+		const mockFn2 = jest.fn();
+
+		_.forEach(inputArr, mockFn1);
+		expect(mockFn1).toHaveBeenCalledTimes(3);
+
+		_.forEach(inputObj, mockFn2);
+		expect(mockFn2).toHaveBeenCalledTimes(3);
+	});
+	describe('//--Arrays--//', () => {
+		test('given func should be called with element, index and collection', () => {
+			const inputArr = [1, 2, 3];
+			const mockFn1 = jest.fn();
+			_.forEach(inputArr, mockFn1);
+			expect(mockFn1).toHaveBeenCalledTimes(3);
+			expect(mockFn1).toHaveBeenCalledWith(1, 0, inputArr);
+			expect(mockFn1).toHaveBeenCalledWith(2, 1, inputArr);
+			expect(mockFn1).toHaveBeenCalledWith(3, 2, inputArr);
+		});
+	});
+	describe('//--Objects--//', () => {
+		test('given func should be called with value, key and collection', () => {
+			const inputObj = { one: 1, two: 2, three: 3 };
+			const mockFn1 = jest.fn();
+			_.forEach(inputObj, mockFn1);
+			expect(mockFn1).toHaveBeenCalledTimes(3);
+			expect(mockFn1).toHaveBeenCalledWith(1, 'one', inputObj);
+			expect(mockFn1).toHaveBeenCalledWith(2, 'two', inputObj);
+			expect(mockFn1).toHaveBeenCalledWith(3, 'three', inputObj);
+		});
+	});
 });

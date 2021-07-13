@@ -42,11 +42,18 @@ _.filter = (collection, predicate) => {
 	}
 };
 
-_.forEach = (collection) => {
+_.forEach = (collection, fn) => {
+	// Got a bit confused about whether this should work for objects as well as arrays so may have made life harder for myself
+	if (Array.isArray(collection)) {
+		for (let i = 0; i < collection.length; i++) {
+			fn(collection[i], i, collection);
+		}
+	} else {
+		for (const key in collection) {
+			fn(collection[key], key, collection);
+		}
+	}
 	return collection;
 };
-//takes collection and fn
-//iterates and invokes fn with each iteratee
-//returns collection
 
 module.exports = _;
