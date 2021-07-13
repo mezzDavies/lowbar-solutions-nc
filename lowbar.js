@@ -34,7 +34,7 @@ _.filter = (collection, predicate) => {
 		}
 		return filteredArr;
 	} else {
-		//---- Got a bit confused about how to implement for different collection types but this works at least ----//
+		//---- Wasn't sure how to implement for different collection types but this works at least ----//
 		for (const key in collection) {
 			if (predicate(collection[key])) filteredArr.push(collection[key]);
 		}
@@ -54,6 +54,16 @@ _.forEach = (collection, fn) => {
 		}
 	}
 	return collection;
+};
+
+_.invert = (obj) => {
+	const invertedObj = {};
+
+	for (const key in obj) {
+		invertedObj[obj[key]] = key;
+	}
+
+	return invertedObj;
 };
 
 module.exports = _;

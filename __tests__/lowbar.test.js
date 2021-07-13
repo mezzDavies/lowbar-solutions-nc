@@ -209,3 +209,26 @@ describe('#forEach', () => {
 		});
 	});
 });
+
+describe('#invert', () => {
+	test('should return empty obj when given empty obj', () => {
+		expect(_.invert({})).toEqual({});
+	});
+	test('should successfully invert obj with a single key/value pair', () => {
+		expect(_.invert({ one: '1' })).toEqual({ 1: 'one' });
+	});
+	test('should successfully invert obj with multiple key/value pairs', () => {
+		expect(_.invert({ one: '1', two: '2' })).toEqual({ 1: 'one', 2: 'two' });
+	});
+	test('if object contains duplicate values, subsequent values overwrite property assignments of previous values', () => {
+		expect(_.invert({ one: '1', two: '2', three: '1' })).toEqual({
+			1: 'three',
+			2: 'two'
+		});
+	});
+	test('should not mutate original object', () => {
+		const input = { one: '1', two: '2', three: '1' };
+		expect(_.invert(input)).not.toBe(input);
+		expect(input).toEqual({ one: '1', two: '2', three: '1' });
+	});
+});
