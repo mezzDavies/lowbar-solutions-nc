@@ -34,7 +34,7 @@ _.filter = (collection, predicate) => {
 		}
 		return filteredArr;
 	} else {
-		//---- Not yet working for objects ----//
+		//---- Got a bit confused about how to implement for different collection types but this works at least ----//
 		for (const key in collection) {
 			if (predicate(collection[key])) filteredArr.push(collection[key]);
 		}

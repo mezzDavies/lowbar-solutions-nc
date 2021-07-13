@@ -125,12 +125,32 @@ describe('#filter', () => {
 		});
 	});
 	describe('-- Objects --', () => {
-		test('should return object with one property - predicate return true', () => {
+		test('should return array with one obj prop - predicate return true', () => {
+			const testPred = (person) => !(person.age % 2);
+			const testObj = { duncan: { favColour: 'red', age: 28 } };
+			expect(_.filter(testObj, testPred)).toEqual([
+				{ favColour: 'red', age: 28 }
+			]);
+		});
+		test('should return array with no obj prop - predicate return false', () => {
 			const testPred = (person) => !(person.age % 2);
 			const testObj = { duncan: { favColour: 'red', age: 27 } };
-			expect(_.filter(testObj, testPred)).toEqual({
-				duncan: { favColour: 'red', age: 27 }
-			});
+			expect(_.filter(testObj, testPred)).toEqual([]);
+		});
+		test('predicate should be called on each obj prop', () => {
+			const mockFn = jest.fn();
+			const testObj = { one: 1, two: 2, three: 3 };
+			_.filter(testObj, mockFn);
+			expect(mockFn).toHaveBeenCalledTimes(3);
+			expect(mockFn).toHaveBeenCalledWith(1);
+			expect(mockFn).toHaveBeenCalledWith(2);
+			expect(mockFn).toHaveBeenCalledWith(3);
+		});
+		test('should correctly filter longer arrays', () => {
+			const mockFn = jest.fn().mockImplementation((num) => !(num % 2));
+			const testObj = { one: 1, two: 2, three: 3 };
+			expect(_.filter(testObj, mockFn)).toEqual([2]);
+			expect(mockFn).toHaveBeenCalledTimes(3);
 		});
 	});
 	describe('-- Side Effects --', () => {
