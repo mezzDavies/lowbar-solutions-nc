@@ -6,12 +6,12 @@ _.identity = (x) => {
 
 _.fromPairs = (arrPairs) => {
 	if (!arrPairs.length) return {};
-	const returnObj = {};
+	const objFromPair = {};
 
 	for (let i = 0; i < arrPairs.length; i++) {
-		returnObj[arrPairs[i][0]] = arrPairs[i][1];
+		objFromPair[arrPairs[i][0]] = arrPairs[i][1];
 	}
-	return returnObj;
+	return objFromPair;
 };
 
 _.map = (collection, func) => {
