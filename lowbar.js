@@ -75,9 +75,9 @@ _.zip = (...args) => {
 
 	for (let i = 0; i < arrayCollection.length; i++) {
 		const set = arrayCollection[i];
-		set.forEach((element, index) => {
-			zippedArrays[index].push(element);
-		});
+		for (let j = 0; j < set.length; j++) {
+			zippedArrays[j].push(set[j]);
+		}
 	}
 
 	return zippedArrays;
