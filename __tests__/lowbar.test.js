@@ -277,3 +277,29 @@ describe('#zip', () => {
 		expect(testArr2).toEqual([1, 2]);
 	});
 });
+
+describe('#fill', () => {
+	test('return an empty array when called with empty array and value', () => {
+		expect(_.fill([], '*')).toEqual([]);
+	});
+	test('fills an array with the given value', () => {
+		expect(_.fill([, , , , ,], '*')).toEqual(['*', '*', '*', '*', '*']);
+	});
+	test('_.fill takes a start index argument that gives the index at which to start the fill - defaults to zero', () => {
+		expect(_.fill([, , ,], 5)).toEqual([5, 5, 5]);
+	});
+	test('_.fill takes a start index argument that gives the index at which to start the fill', () => {
+		expect(_.fill([, , ,], 5, 1)).toEqual([undefined, 5, 5]);
+	});
+	test('_.fill takes an end index argument that gives the index at which to end the fill - defaults to array length', () => {
+		expect(_.fill([, , ,], 10)).toEqual([10, 10, 10]);
+	});
+	test('_.fill takes an end index argument that gives the index at which to end the fill', () => {
+		expect(_.fill([, , ,], 10, 0, 2)).toEqual([10, 10, undefined]);
+	});
+	test('SHOULD mutate the given array', () => {
+		const inputArr = [, , ,];
+		_.fill(inputArr, 5);
+		expect(inputArr).toEqual([5, 5, 5]);
+	});
+});

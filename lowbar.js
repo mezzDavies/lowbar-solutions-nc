@@ -83,4 +83,11 @@ _.zip = (...args) => {
 	return zippedArrays;
 };
 
+_.fill = (array, value, startIndex = 0, endIndex = array.length) => {
+	for (let i = startIndex; i < endIndex; i++) {
+		array[i] = value;
+	}
+	return array;
+};
+
 module.exports = _;
