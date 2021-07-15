@@ -232,3 +232,48 @@ describe('#invert', () => {
 		expect(input).toEqual({ one: '1', two: '2', three: '1' });
 	});
 });
+
+describe('#zip', () => {
+	test('should return empty array when given empty array', () => {
+		expect(_.zip([])).toEqual([]);
+	});
+	test('should correctly group first and second elements of given arrays', () => {
+		const testArrays = [
+			['a', 'b'],
+			[1, 2]
+		];
+		expect(_.zip(...testArrays)).toEqual([
+			['a', 1],
+			['b', 2]
+		]);
+	});
+	test('should correctly group arrays with a length > 2', () => {
+		const testArrays = [
+			['a', 'b', 'c'],
+			[1, 2, 3]
+		];
+		expect(_.zip(...testArrays)).toEqual([
+			['a', 1],
+			['b', 2],
+			['c', 3]
+		]);
+	});
+	test('should correctly group > 2 arrays', () => {
+		const testArrays = [
+			['a', 'b'],
+			[1, 2],
+			[true, false]
+		];
+		expect(_.zip(...testArrays)).toEqual([
+			['a', 1, true],
+			['b', 2, false]
+		]);
+	});
+	test('should not mutate the original arrays', () => {
+		const testArr1 = ['a', 'b'];
+		const testArr2 = [1, 2];
+		_.zip(testArr1, testArr2);
+		expect(testArr1).toEqual(['a', 'b']);
+		expect(testArr2).toEqual([1, 2]);
+	});
+});

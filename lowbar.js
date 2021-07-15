@@ -58,12 +58,29 @@ _.forEach = (collection, fn) => {
 
 _.invert = (obj) => {
 	const invertedObj = {};
-
 	for (const key in obj) {
 		invertedObj[obj[key]] = key;
 	}
-
 	return invertedObj;
+};
+
+_.zip = (...args) => {
+	const arrayCollection = [...args];
+	const arrayAmount = arrayCollection[0].length;
+	const zippedArrays = [];
+
+	for (let i = 0; i < arrayAmount; i++) {
+		zippedArrays.push([]);
+	}
+
+	for (let i = 0; i < arrayCollection.length; i++) {
+		const set = arrayCollection[i];
+		set.forEach((element, index) => {
+			zippedArrays[index].push(element);
+		});
+	}
+
+	return zippedArrays;
 };
 
 module.exports = _;
