@@ -64,21 +64,22 @@ describe('#map', () => {
 		expect(_.map(inputArr, mockFunc)).toHaveLength(2);
 		expect(_.map(inputObj, mockFunc)).toHaveLength(2);
 	});
-	test('given function is called on each iteratee if passed an array', () => {
+	test('Arrays: iteratee function is called with value, index and collection of each element', () => {
 		const mockFunc = jest.fn();
 		const inputArr = [1, 2];
-
 		_.map(inputArr, mockFunc);
 		expect(mockFunc).toHaveBeenCalledTimes(2);
+		expect(mockFunc).toHaveBeenCalledWith(1, 0, inputArr);
+		expect(mockFunc).toHaveBeenCalledWith(2, 1, inputArr);
 	});
-	test('given function is called on each value of a passed object', () => {
+	test('Objects: iteratee is called with value, key and collection for each prop', () => {
 		const mockFunc = jest.fn();
 		const inputObj = { a: 1, b: 2 };
 
 		_.map(inputObj, mockFunc);
 		expect(mockFunc).toHaveBeenCalledTimes(2);
-		expect(mockFunc).toHaveBeenCalledWith(1);
-		expect(mockFunc).toHaveBeenCalledWith(2);
+		expect(mockFunc).toHaveBeenCalledWith(1, 'a', inputObj);
+		expect(mockFunc).toHaveBeenCalledWith(2, 'b', inputObj);
 	});
 	test('should not mutate given collection', () => {
 		const mockFunc = jest.fn();
@@ -108,16 +109,16 @@ describe('#filter', () => {
 			const testArr = [1];
 			expect(_.filter(testArr, testPred)).toEqual([]);
 		});
-		test('predicate should be called on each array element', () => {
+		test('predicate should be called on each array element - predicate should be called with value, index and collection', () => {
 			const mockFn = jest.fn();
 			const testArr = [1, 2, 3, 4, 5];
 			_.filter(testArr, mockFn);
 			expect(mockFn).toHaveBeenCalledTimes(5);
-			expect(mockFn).toHaveBeenCalledWith(1);
-			expect(mockFn).toHaveBeenCalledWith(2);
-			expect(mockFn).toHaveBeenCalledWith(3);
-			expect(mockFn).toHaveBeenCalledWith(4);
-			expect(mockFn).toHaveBeenCalledWith(5);
+			expect(mockFn).toHaveBeenCalledWith(1, 0, testArr);
+			expect(mockFn).toHaveBeenCalledWith(2, 1, testArr);
+			expect(mockFn).toHaveBeenCalledWith(3, 2, testArr);
+			expect(mockFn).toHaveBeenCalledWith(4, 3, testArr);
+			expect(mockFn).toHaveBeenCalledWith(5, 4, testArr);
 		});
 		test('should correctly filter longer arrays', () => {
 			const mockFn = jest.fn().mockImplementation((num) => !(num % 2));
@@ -131,7 +132,7 @@ describe('#filter', () => {
 			const testPred = (person) => !(person.age % 2);
 			const testObj = { duncan: { favColour: 'red', age: 28 } };
 			expect(_.filter(testObj, testPred)).toEqual([
-				{ favColour: 'red', age: 28 }
+				['duncan', { favColour: 'red', age: 28 }]
 			]);
 		});
 		test('should return array with no obj prop - predicate return false', () => {
@@ -144,14 +145,14 @@ describe('#filter', () => {
 			const testObj = { one: 1, two: 2, three: 3 };
 			_.filter(testObj, mockFn);
 			expect(mockFn).toHaveBeenCalledTimes(3);
-			expect(mockFn).toHaveBeenCalledWith(1);
-			expect(mockFn).toHaveBeenCalledWith(2);
-			expect(mockFn).toHaveBeenCalledWith(3);
+			expect(mockFn).toHaveBeenCalledWith(1, 'one', testObj);
+			expect(mockFn).toHaveBeenCalledWith(2, 'two', testObj);
+			expect(mockFn).toHaveBeenCalledWith(3, 'three', testObj);
 		});
 		test('should correctly filter longer arrays', () => {
 			const mockFn = jest.fn().mockImplementation((num) => !(num % 2));
 			const testObj = { one: 1, two: 2, three: 3 };
-			expect(_.filter(testObj, mockFn)).toEqual([2]);
+			expect(_.filter(testObj, mockFn)).toEqual([['two', 2]]);
 			expect(mockFn).toHaveBeenCalledTimes(3);
 		});
 	});

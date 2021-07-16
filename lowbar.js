@@ -13,18 +13,17 @@ _.fromPairs = (arrPairs) => {
 	return pairsObj;
 };
 
-_.map = (collection, func) => {
+_.map = (collection, iteratee) => {
 	let map = [];
 
-	if (!Array.isArray(collection)) {
-		const values = Object.values(collection);
-		map = values;
+	if (Array.isArray(collection)) {
+		for (let i = 0; i < collection.length; i++) {
+			map.push(iteratee(collection[i], i, collection));
+		}
 	} else {
-		map = [...collection];
-	}
-
-	for (let i = 0; i < map.length; i++) {
-		func(map[i]);
+		for (const key in collection) {
+			map.push(iteratee(collection[key], key, collection));
+		}
 	}
 
 	return map;
@@ -34,13 +33,15 @@ _.filter = (collection, predicate) => {
 	const filteredArr = [];
 	if (Array.isArray(collection)) {
 		for (let i = 0; i < collection.length; i++) {
-			if (predicate(collection[i])) filteredArr.push(collection[i]);
+			if (predicate(collection[i], i, collection))
+				filteredArr.push(collection[i]);
 		}
 		return filteredArr;
 	} else {
 		//---- Wasn't sure how to implement for different collection types but this works at least ----//
 		for (const key in collection) {
-			if (predicate(collection[key])) filteredArr.push(collection[key]);
+			if (predicate(collection[key], key, collection))
+				filteredArr.push([key, collection[key]]);
 		}
 		return filteredArr;
 	}
