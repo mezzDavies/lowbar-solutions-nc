@@ -77,6 +77,8 @@ describe('#map', () => {
 
 		_.map(inputObj, mockFunc);
 		expect(mockFunc).toHaveBeenCalledTimes(2);
+		expect(mockFunc).toHaveBeenCalledWith(1);
+		expect(mockFunc).toHaveBeenCalledWith(2);
 	});
 	test('should not mutate given collection', () => {
 		const mockFunc = jest.fn();
@@ -301,5 +303,58 @@ describe('#fill', () => {
 		const inputArr = [, , ,];
 		_.fill(inputArr, 5);
 		expect(inputArr).toEqual([5, 5, 5]);
+	});
+});
+
+describe('#find', () => {
+	describe('//---Arrays---//', () => {
+		test('return undefined if given empty array or if no matching elements found', () => {
+			expect(_.find([])).toBe(undefined);
+			expect(_.find([2], (x) => x === 1)).toBe(undefined);
+		});
+		test('should invoke predicate for all elements of array when no matches found', () => {
+			const mockFn = jest.fn();
+			_.find([1, 2, 3], mockFn);
+			expect(mockFn).toHaveBeenCalledTimes(3);
+			expect(mockFn).toHaveBeenCalledWith(1);
+			expect(mockFn).toHaveBeenCalledWith(2);
+			expect(mockFn).toHaveBeenCalledWith(3);
+		});
+		test('should only invoke the predicate until it returns true - then return element that passed the predicate func', () => {
+			const mockFn = jest.fn().mockImplementation((x) => x === 2);
+			expect(_.find([1, 2, 3], mockFn)).toBe(2);
+			expect(mockFn).not.toHaveBeenCalledWith(3);
+		});
+		test('should not mutate the given array', () => {
+			const mockFn = jest.fn().mockImplementation((x) => x === 2);
+			const testArr = [1, 2, 3];
+			_.find(testArr, mockFn);
+			expect(testArr).toEqual([1, 2, 3]);
+		});
+	});
+	describe('//---Objects---//', () => {
+		test('return undefined if given empty object or if no matching elements found', () => {
+			expect(_.find({})).toBe(undefined);
+			expect(_.find({ two: 2 }, (x) => x === 1)).toBe(undefined);
+		});
+		test('should invoke the predicate for once for each prop', () => {
+			const mockFn = jest.fn();
+			_.find({ one: 1, two: 2, three: 3 }, mockFn);
+			expect(mockFn).toHaveBeenCalledTimes(3);
+			expect(mockFn).toHaveBeenCalledWith(1);
+			expect(mockFn).toHaveBeenCalledWith(2);
+			expect(mockFn).toHaveBeenCalledWith(3);
+		});
+		test('should only invoke the predicate with prop until returns true - then returns prop that passed predicate', () => {
+			const mockFn = jest.fn().mockImplementation((x) => x === 2);
+			expect(_.find({ one: 1, two: 2, three: 3 }, mockFn)).toBe(2);
+			expect(mockFn).not.toHaveBeenCalledWith(3);
+		});
+		test('should not mutate given object', () => {
+			const mockFn = jest.fn().mockImplementation((x) => x === 2);
+			const inputObj = { one: 1, two: 2, three: 3 };
+			_.find(inputObj, mockFn);
+			expect(inputObj).toEqual({ one: 1, two: 2, three: 3 });
+		});
 	});
 });

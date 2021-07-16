@@ -5,25 +5,29 @@ _.identity = (x) => {
 };
 
 _.fromPairs = (arrPairs) => {
-	if (!arrPairs.length) return {};
-	const objFromPair = {};
+	const objFromPairs = {};
 
 	for (let i = 0; i < arrPairs.length; i++) {
-		objFromPair[arrPairs[i][0]] = arrPairs[i][1];
+		objFromPairs[arrPairs[i][0]] = arrPairs[i][1];
 	}
-	return objFromPair;
+	return objFromPairs;
 };
 
 _.map = (collection, func) => {
-	let input = collection;
+	let map = [];
+
 	if (!Array.isArray(collection)) {
 		const values = Object.values(collection);
-		input = values;
+		map = values;
+	} else {
+		map = [...collection];
 	}
-	for (let i = 0; i < input.length; i++) {
-		func(input[i]);
+
+	for (let i = 0; i < map.length; i++) {
+		func(map[i]);
 	}
-	return input;
+
+	return map;
 };
 
 _.filter = (collection, predicate) => {
@@ -43,7 +47,6 @@ _.filter = (collection, predicate) => {
 };
 
 _.forEach = (collection, fn) => {
-	// Got a bit confused about whether this should work for objects as well as arrays so may have made life harder for myself
 	if (Array.isArray(collection)) {
 		for (let i = 0; i < collection.length; i++) {
 			fn(collection[i], i, collection);
@@ -88,6 +91,18 @@ _.fill = (array, value, startIndex = 0, endIndex = array.length) => {
 		array[i] = value;
 	}
 	return array;
+};
+
+_.find = (collection, predicate) => {
+	if (Array.isArray(collection)) {
+		for (let i = 0; i < collection.length; i++) {
+			if (predicate(collection[i])) return collection[i];
+		}
+	} else {
+		for (const key in collection) {
+			if (predicate(collection[key])) return collection[key];
+		}
+	}
 };
 
 module.exports = _;
