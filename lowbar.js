@@ -5,12 +5,12 @@ _.identity = (x) => {
 };
 
 _.fromPairs = (arrPairs) => {
-	const objFromPairs = {};
+	const pairsObj = {};
 
 	for (let i = 0; i < arrPairs.length; i++) {
-		objFromPairs[arrPairs[i][0]] = arrPairs[i][1];
+		pairsObj[arrPairs[i][0]] = arrPairs[i][1];
 	}
-	return objFromPairs;
+	return pairsObj;
 };
 
 _.map = (collection, func) => {
@@ -96,11 +96,11 @@ _.fill = (array, value, startIndex = 0, endIndex = array.length) => {
 _.find = (collection, predicate) => {
 	if (Array.isArray(collection)) {
 		for (let i = 0; i < collection.length; i++) {
-			if (predicate(collection[i])) return collection[i];
+			if (predicate(collection[i], i, collection)) return collection[i];
 		}
 	} else {
 		for (const key in collection) {
-			if (predicate(collection[key])) return collection[key];
+			if (predicate(collection[key], key, collection)) return collection[key];
 		}
 	}
 };
