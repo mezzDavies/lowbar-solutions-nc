@@ -106,4 +106,23 @@ _.find = (collection, predicate) => {
 	}
 };
 
+_.chunk = (arr, size = 1) => {
+	const innerArrCount = arr.length / size;
+	const chunkedArr = [];
+
+	let inputArrIndex = 0;
+
+	for (let i = 0; i < innerArrCount; i++) {
+		chunkedArr[i] = new Array();
+
+		for (let j = 0; j < size; j++) {
+			if (inputArrIndex > arr.length - 1) break;
+			chunkedArr[i][j] = arr[inputArrIndex];
+			inputArrIndex++;
+		}
+	}
+
+	return chunkedArr;
+};
+
 module.exports = _;

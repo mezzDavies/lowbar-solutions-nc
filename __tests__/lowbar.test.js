@@ -362,3 +362,46 @@ describe('#find', () => {
 		});
 	});
 });
+
+describe('#chunk', () => {
+	test('should return empty array when given empty array - no matter what number is given', () => {
+		expect(_.chunk([], 2)).toEqual([]);
+		expect(_.chunk([], 5)).toEqual([]);
+	});
+	test('inner array size should default to 1 when given no second arg', () => {
+		expect(_.chunk([1, 2, 3])).toEqual([[1], [2], [3]]);
+	});
+	test('should return array in chunks of length 1 when given number 1', () => {
+		expect(_.chunk([1], 1)).toEqual([[1]]);
+		expect(_.chunk([1, 2, 3], 1)).toEqual([[1], [2], [3]]);
+	});
+	test('should return array in chunks of 2 which given number 2', () => {
+		expect(_.chunk([1, 2, 3, 4, 5, 6], 2)).toEqual([
+			[1, 2],
+			[3, 4],
+			[5, 6]
+		]);
+	});
+	test('should return array in chunks > 2 depending on arg given', () => {
+		expect(_.chunk([1, 2, 3, 4, 5, 6], 3)).toEqual([
+			[1, 2, 3],
+			[4, 5, 6]
+		]);
+		expect(_.chunk([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5)).toEqual([
+			[1, 2, 3, 4, 5],
+			[6, 7, 8, 9, 10]
+		]);
+	});
+	test('should return correctly chunked arrays when elements cannot be split evenly', () => {
+		expect(_.chunk([1, 2, 3], 2)).toEqual([[1, 2], [3]]);
+		expect(_.chunk([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 7)).toEqual([
+			[1, 2, 3, 4, 5, 6, 7],
+			[8, 9, 10]
+		]);
+	});
+	test('inputted array should not be mutated', () => {
+		const inputArr = [1, 2, 3, 4, 5];
+		expect(_.chunk(inputArr, 2)).not.toBe(inputArr);
+		expect(inputArr).toEqual([1, 2, 3, 4, 5]);
+	});
+});
