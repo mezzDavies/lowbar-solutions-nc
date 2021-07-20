@@ -125,4 +125,15 @@ _.chunk = (arr, size = 1) => {
 	return chunkedArr;
 };
 
+_.remove = (array, pred) => {
+	for (let i = 0; i < array.length; i++) {
+		if (pred(array[i])) {
+			// this feels really clunky - possibly a better way to do it?
+			array.splice(i, 1);
+			i--;
+		}
+	}
+	return array;
+};
+
 module.exports = _;

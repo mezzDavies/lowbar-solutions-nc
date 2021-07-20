@@ -405,3 +405,36 @@ describe('#chunk', () => {
 		expect(inputArr).toEqual([1, 2, 3, 4, 5]);
 	});
 });
+
+describe.only('#remove', () => {
+	test('return empty array if given array is empty', () => {
+		expect(_.remove([], jest.fn())).toEqual([]);
+	});
+	test('return unchanged array if predicate is always falsy', () => {
+		const mockPred = jest.fn().mockImplementation((num) => num === 2);
+		expect(_.remove([1, 3, 5], mockPred)).toEqual([1, 3, 5]);
+		expect(mockPred).toHaveBeenCalledTimes(3);
+		expect(mockPred).toHaveBeenCalledWith(1);
+		expect(mockPred).toHaveBeenCalledWith(3);
+		expect(mockPred).toHaveBeenCalledWith(5);
+	});
+	test('should remove a single element from array if predicate returns truthy for it', () => {
+		const mockPred = jest.fn().mockImplementation((num) => num === 2);
+		expect(_.remove([1, 2, 3], mockPred)).toEqual([1, 3]);
+		expect(mockPred).toHaveBeenCalledTimes(3);
+		expect(mockPred).toHaveBeenCalledWith(1);
+		expect(mockPred).toHaveBeenCalledWith(2);
+		expect(mockPred).toHaveBeenCalledWith(3);
+	});
+	test('should remove multiple elements from an array if predicate returns truthy for them', () => {
+		const mockPred = jest.fn().mockImplementation((num) => num === 2);
+		expect(_.remove([1, 2, 1, 2, 1, 2], mockPred)).toEqual([1, 1, 1]);
+		expect(mockPred).toHaveBeenCalledTimes(6);
+	});
+	test('Side effects: SHOULD mutate given array', () => {
+		const mockPred = jest.fn();
+		const testArr = [1, 2, 3, 4, 5];
+		expect(_.remove(testArr, mockPred)).toBe(testArr);
+		expect(testArr).toEqual([1, 2, 3, 4, 5]);
+	});
+});
