@@ -29,22 +29,20 @@ _.map = (collection, iteratee) => {
 	return map;
 };
 
-_.filter = (collection, predicate) => {
+_.filter = (collection, pred) => {
 	const filteredArr = [];
-	if (Array.isArray(collection)) {
-		for (let i = 0; i < collection.length; i++) {
-			if (predicate(collection[i], i, collection))
-				filteredArr.push(collection[i]);
+
+	for (const prop in collection) {
+		if (Array.isArray(collection)) {
+			if (pred(collection[prop], prop, collection))
+				filteredArr.push(collection[prop]);
+		} else {
+			if (pred(collection[prop], prop, collection))
+				filteredArr.push([prop, collection[prop]]);
 		}
-		return filteredArr;
-	} else {
-		//---- Wasn't sure how to implement for different collection types but this works at least ----//
-		for (const key in collection) {
-			if (predicate(collection[key], key, collection))
-				filteredArr.push([key, collection[key]]);
-		}
-		return filteredArr;
 	}
+
+	return filteredArr;
 };
 
 _.forEach = (collection, fn) => {
@@ -128,12 +126,13 @@ _.chunk = (arr, size = 1) => {
 _.remove = (array, pred) => {
 	for (let i = 0; i < array.length; i++) {
 		if (pred(array[i])) {
-			// this feels really clunky - possibly a better way to do it?
 			array.splice(i, 1);
 			i--;
 		}
 	}
 	return array;
 };
+
+_.shuffle = () => {};
 
 module.exports = _;

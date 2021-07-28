@@ -114,11 +114,11 @@ describe('#filter', () => {
 			const testArr = [1, 2, 3, 4, 5];
 			_.filter(testArr, mockFn);
 			expect(mockFn).toHaveBeenCalledTimes(5);
-			expect(mockFn).toHaveBeenCalledWith(1, 0, testArr);
-			expect(mockFn).toHaveBeenCalledWith(2, 1, testArr);
-			expect(mockFn).toHaveBeenCalledWith(3, 2, testArr);
-			expect(mockFn).toHaveBeenCalledWith(4, 3, testArr);
-			expect(mockFn).toHaveBeenCalledWith(5, 4, testArr);
+			expect(mockFn).toHaveBeenCalledWith(1, '0', testArr);
+			expect(mockFn).toHaveBeenCalledWith(2, '1', testArr);
+			expect(mockFn).toHaveBeenCalledWith(3, '2', testArr);
+			expect(mockFn).toHaveBeenCalledWith(4, '3', testArr);
+			expect(mockFn).toHaveBeenCalledWith(5, '4', testArr);
 		});
 		test('should correctly filter longer arrays', () => {
 			const mockFn = jest.fn().mockImplementation((num) => !(num % 2));
@@ -406,7 +406,7 @@ describe('#chunk', () => {
 	});
 });
 
-describe.only('#remove', () => {
+describe('#remove', () => {
 	test('return empty array if given array is empty', () => {
 		expect(_.remove([], jest.fn())).toEqual([]);
 	});
@@ -437,4 +437,8 @@ describe.only('#remove', () => {
 		expect(_.remove(testArr, mockPred)).toBe(testArr);
 		expect(testArr).toEqual([1, 2, 3, 4, 5]);
 	});
+});
+
+describe('#shuffle', () => {
+	test('should ', () => {});
 });
