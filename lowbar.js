@@ -90,14 +90,8 @@ _.fill = (array, value, startIndex = 0, endIndex = array.length) => {
 };
 
 _.find = (collection, predicate) => {
-	if (Array.isArray(collection)) {
-		for (let i = 0; i < collection.length; i++) {
-			if (predicate(collection[i], i, collection)) return collection[i];
-		}
-	} else {
-		for (const key in collection) {
-			if (predicate(collection[key], key, collection)) return collection[key];
-		}
+	for (const prop in collection) {
+		if (predicate(collection[prop], prop, collection)) return collection[prop];
 	}
 };
 

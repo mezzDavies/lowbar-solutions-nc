@@ -318,9 +318,9 @@ describe('#find', () => {
 			const inputArr = [1, 2, 3];
 			_.find(inputArr, mockFn);
 			expect(mockFn).toHaveBeenCalledTimes(3);
-			expect(mockFn).toHaveBeenCalledWith(1, 0, inputArr);
-			expect(mockFn).toHaveBeenCalledWith(2, 1, inputArr);
-			expect(mockFn).toHaveBeenCalledWith(3, 2, inputArr);
+			expect(mockFn).toHaveBeenCalledWith(1, '0', inputArr);
+			expect(mockFn).toHaveBeenCalledWith(2, '1', inputArr);
+			expect(mockFn).toHaveBeenCalledWith(3, '2', inputArr);
 		});
 		test('should only invoke the predicate until it returns true - then return element that passed the predicate func', () => {
 			const mockFn = jest.fn().mockImplementation((x) => x === 2);
