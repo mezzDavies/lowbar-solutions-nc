@@ -16,13 +16,11 @@ _.fromPairs = (arrPairs) => {
 _.map = (collection, iteratee) => {
 	let map = [];
 
-	if (Array.isArray(collection)) {
-		for (let i = 0; i < collection.length; i++) {
-			map.push(iteratee(collection[i], i, collection));
-		}
-	} else {
-		for (const key in collection) {
-			map.push(iteratee(collection[key], key, collection));
+	for (const prop in collection) {
+		if (Array.isArray(collection)) {
+			map.push(iteratee(collection[prop], prop, collection));
+		} else {
+			map.push(iteratee(collection[prop], prop, collection));
 		}
 	}
 

@@ -69,8 +69,8 @@ describe('#map', () => {
 		const inputArr = [1, 2];
 		_.map(inputArr, mockFunc);
 		expect(mockFunc).toHaveBeenCalledTimes(2);
-		expect(mockFunc).toHaveBeenCalledWith(1, 0, inputArr);
-		expect(mockFunc).toHaveBeenCalledWith(2, 1, inputArr);
+		expect(mockFunc).toHaveBeenCalledWith(1, '0', inputArr);
+		expect(mockFunc).toHaveBeenCalledWith(2, '1', inputArr);
 	});
 	test('Objects: iteratee is called with value, key and collection for each prop', () => {
 		const mockFunc = jest.fn();
