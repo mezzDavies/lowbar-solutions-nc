@@ -195,9 +195,9 @@ describe('#forEach', () => {
 			const mockFn1 = jest.fn();
 			_.forEach(inputArr, mockFn1);
 			expect(mockFn1).toHaveBeenCalledTimes(3);
-			expect(mockFn1).toHaveBeenCalledWith(1, 0, inputArr);
-			expect(mockFn1).toHaveBeenCalledWith(2, 1, inputArr);
-			expect(mockFn1).toHaveBeenCalledWith(3, 2, inputArr);
+			expect(mockFn1).toHaveBeenCalledWith(1, '0', inputArr);
+			expect(mockFn1).toHaveBeenCalledWith(2, '1', inputArr);
+			expect(mockFn1).toHaveBeenCalledWith(3, '2', inputArr);
 		});
 	});
 	describe('//--Objects--//', () => {

@@ -44,15 +44,14 @@ _.filter = (collection, pred) => {
 };
 
 _.forEach = (collection, fn) => {
-	if (Array.isArray(collection)) {
-		for (let i = 0; i < collection.length; i++) {
-			fn(collection[i], i, collection);
-		}
-	} else {
-		for (const key in collection) {
-			fn(collection[key], key, collection);
+	for (const prop in collection) {
+		if (Array.isArray(collection)) {
+			fn(collection[prop], prop, collection);
+		} else {
+			fn(collection[prop], prop, collection);
 		}
 	}
+
 	return collection;
 };
 
