@@ -45,11 +45,7 @@ _.filter = (collection, pred) => {
 
 _.forEach = (collection, fn) => {
 	for (const prop in collection) {
-		if (Array.isArray(collection)) {
-			fn(collection[prop], prop, collection);
-		} else {
-			fn(collection[prop], prop, collection);
-		}
+		fn(collection[prop], prop, collection);
 	}
 
 	return collection;
