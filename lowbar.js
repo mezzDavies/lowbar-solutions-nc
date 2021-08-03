@@ -17,11 +17,7 @@ _.map = (collection, iteratee) => {
 	let map = [];
 
 	for (const prop in collection) {
-		if (Array.isArray(collection)) {
-			map.push(iteratee(collection[prop], prop, collection));
-		} else {
-			map.push(iteratee(collection[prop], prop, collection));
-		}
+		map.push(iteratee(collection[prop], prop, collection));
 	}
 
 	return map;
