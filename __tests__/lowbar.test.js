@@ -475,3 +475,80 @@ describe('#shuffle', () => {
 		expect(inputArr).toEqual([1, 2, 3, 4, 5]);
 	});
 });
+
+describe('#reduce', () => {
+	test('iteratee function should be called for each item in collection - // ARRAYS //', () => {
+		const mockFunc = jest.fn().mockImplementation((x) => x);
+
+		_.reduce([], mockFunc);
+		expect(mockFunc).toHaveBeenCalledTimes(0);
+
+		_.reduce([1], mockFunc);
+		expect(mockFunc).toHaveBeenCalledTimes(1);
+		expect(mockFunc).toHaveBeenCalledWith(1, 1, '0', [1]);
+		mockFunc.mockReset();
+
+		_.reduce([1, 2, 3], mockFunc);
+		expect(mockFunc).toHaveBeenCalledTimes(3);
+		expect(mockFunc).toHaveBeenCalledWith(1, 1, '0', [1, 2, 3]);
+		expect(mockFunc).toHaveBeenCalledWith(2, 2, '1', [1, 2, 3]);
+		expect(mockFunc).toHaveBeenCalledWith(3, 3, '2', [1, 2, 3]);
+	});
+	test('iteratee function should be called for each item in collection - // OBJECTS //', () => {
+		const mockFunc = jest.fn().mockImplementation((x) => x);
+
+		_.reduce({}, mockFunc);
+		expect(mockFunc).toHaveBeenCalledTimes(0);
+
+		_.reduce({ 1: 'one' }, mockFunc);
+		expect(mockFunc).toHaveBeenCalledTimes(1);
+		expect(mockFunc).toHaveBeenCalledWith('one', 'one', '1', { 1: 'one' });
+		mockFunc.mockReset();
+
+		_.reduce({ 1: 'one', 2: 'two', 3: 'three' }, mockFunc);
+		expect(mockFunc).toHaveBeenCalledTimes(3);
+		expect(mockFunc).toHaveBeenCalledWith('one', 'one', '1', {
+			1: 'one',
+			2: 'two',
+			3: 'three'
+		});
+		expect(mockFunc).toHaveBeenCalledWith('two', 'two', '2', {
+			1: 'one',
+			2: 'two',
+			3: 'three'
+		});
+		expect(mockFunc).toHaveBeenCalledWith('three', 'three', '3', {
+			1: 'one',
+			2: 'two',
+			3: 'three'
+		});
+	});
+	test('accumulator should default to first item in collection - unless provided in reduce invocation', () => {
+		const mockFunc = jest.fn().mockImplementation((x) => x);
+		expect(_.reduce([1], mockFunc)).toBe(1);
+		expect(_.reduce([1], mockFunc, 5)).toBe(5);
+	});
+	test('accumulator should be updated with the result of the iteratee func', () => {
+		const sum = (a, b) => a + b;
+		expect(_.reduce([1, 2, 3], sum, 10)).toBe(16);
+	});
+	test('should not mutate given collection', () => {
+		const array = [1, 2, 3];
+		const object = {
+			1: 'one',
+			2: 'two',
+			3: 'three'
+		};
+		const mockFunc = jest.fn();
+
+		_.reduce(array, mockFunc);
+		_.reduce(object, mockFunc);
+
+		expect(array).toEqual([1, 2, 3]);
+		expect(object).toEqual({
+			1: 'one',
+			2: 'two',
+			3: 'three'
+		});
+	});
+});

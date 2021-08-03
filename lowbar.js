@@ -137,4 +137,14 @@ _.shuffle = (array) => {
 	return copiedArr;
 };
 
+_.reduce = (collection, iterateeFn, accumulator) => {
+	for (const prop in collection) {
+		if (!accumulator) accumulator = collection[prop];
+
+		accumulator = iterateeFn(accumulator, collection[prop], prop, collection);
+	}
+
+	return accumulator;
+};
+
 module.exports = _;
