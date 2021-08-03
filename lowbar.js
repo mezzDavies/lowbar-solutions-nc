@@ -124,6 +124,17 @@ _.remove = (array, pred) => {
 	return array;
 };
 
-_.shuffle = () => {};
+_.shuffle = (array) => {
+	const copiedArr = [...array];
+	let oldElement;
+
+	for (let i = copiedArr.length - 1; i > 0; i--) {
+		let randomIndex = Math.floor(Math.random() * (i + 1));
+		oldElement = copiedArr[i];
+		copiedArr[i] = copiedArr[randomIndex];
+		copiedArr[randomIndex] = oldElement;
+	}
+	return copiedArr;
+};
 
 module.exports = _;

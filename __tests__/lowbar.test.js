@@ -1,5 +1,19 @@
 const _ = require('../lowbar');
 
+const mathCopy = Object.create(global.Math);
+
+const mockRandom = () => {
+	const mockMath = Object.create(global.Math);
+	mockMath.random = jest.fn();
+	global.Math = mockMath;
+	console.log('MATH: mocked');
+};
+
+const resetMockRandom = () => {
+	global.Math = mathCopy;
+	console.log('MATH: reset');
+};
+
 describe('#identity', () => {
 	test('returns the value passed as an argument', () => {
 		expect(_.identity(3)).toBe(3);
@@ -440,5 +454,24 @@ describe('#remove', () => {
 });
 
 describe('#shuffle', () => {
-	test('should ', () => {});
+	test('should return given array when length <= 1', () => {
+		expect(_.shuffle([])).toEqual([]);
+		expect(_.shuffle([1])).toEqual([1]);
+	});
+	test('should contain all the same elements after shuffling', () => {
+		const shuffled = _.shuffle([1, 2, 3]);
+		expect(shuffled).toEqual(expect.arrayContaining([1, 2, 3]));
+		expect(shuffled).toHaveLength(3);
+	});
+	test('function should assign elements to random indices with Math.random', () => {
+		mockRandom();
+		_.shuffle([1, 2, 3, 4]);
+		expect(global.Math.random).toHaveBeenCalledTimes(3);
+		resetMockRandom();
+	});
+	test('should not mutate given array', () => {
+		const inputArr = [1, 2, 3, 4, 5];
+		expect(_.shuffle(inputArr)).not.toBe(inputArr);
+		expect(inputArr).toEqual([1, 2, 3, 4, 5]);
+	});
 });
