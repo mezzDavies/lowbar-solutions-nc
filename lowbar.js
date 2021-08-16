@@ -145,24 +145,26 @@ _.intersection = (...arrays) => {
 	if (arrays.length < 2) {
 		intersectingValues = arrays[0] || [];
 	} else {
-		let currentValue;
+		let currentElement;
 		for (let i = 0; i < arrays[0].length; i++) {
-			currentValue = arrays[0][i];
+			currentElement = arrays[0][i]; //select each element of first array in turn
 			currentValIntersects = true;
 
-			if (currentValue === undefined) break;
+			if (!arrays[0].length) break;
 
 			for (let j = 1; j < arrays.length; j++) {
 				const currentArray = arrays[j];
 				// if value is not found in current array then boolean set to false
 				// will probably refactor this as it isn't the best use of _.find
-				if (_.find(currentArray, (x) => x === currentValue) === undefined)
+				if (
+					_.find(currentArray, (x) => x === currentElement) !== currentElement
+				)
 					currentValIntersects = false;
 
 				if (!currentValIntersects) break;
 			}
 			// if bool is true then add value to intersection array
-			if (currentValIntersects) intersectingValues.push(currentValue);
+			if (currentValIntersects) intersectingValues.push(currentElement);
 		}
 	}
 

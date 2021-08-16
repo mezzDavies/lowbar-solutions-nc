@@ -599,5 +599,7 @@ describe('#intersection', () => {
 		expect(
 			_.intersection([true, false], [false], [true, false], [false, true])
 		).toEqual([false]);
+		expect(_.intersection([1], [1, 2, 3], [1, 2, 3, 4, 5])).toEqual([1]);
+		expect(_.intersection([undefined], [undefined, null])).toEqual([undefined]);
 	});
 });
