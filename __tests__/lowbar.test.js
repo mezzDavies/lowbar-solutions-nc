@@ -552,3 +552,52 @@ describe('#reduce', () => {
 		});
 	});
 });
+
+describe('#intersection', () => {
+	test('if called with single array should return that array', () => {
+		expect(_.intersection([])).toEqual([]);
+		expect(_.intersection([1, 2, 3])).toEqual([1, 2, 3]);
+	});
+	test('should return empty array if given empty arrays', () => {
+		expect(_.intersection([], [], [])).toEqual([]);
+	});
+	test('should return intersecting values of when called with two arrays', () => {
+		expect(_.intersection([1, 2, 3], [2])).toEqual([2]);
+		expect(_.intersection([1, 2, 3], [2, 3])).toEqual([2, 3]);
+	});
+	test('should return intersecting values when called with >2 arrays', () => {
+		expect(_.intersection(['a', 'b', 'c'], ['b', 'c'], ['b', 'c'])).toEqual([
+			'b',
+			'c'
+		]);
+		expect(
+			_.intersection(
+				[1, 2],
+				[1, 3],
+				[1, 4],
+				[1, 5],
+				[1, 6],
+				[1, 7],
+				[1, 8],
+				[1, 9]
+			)
+		).toEqual([1]);
+	});
+	test('mutation/reference tests ', () => {
+		const array1 = [1, 2, 3];
+		const array2 = [1, 2, 3];
+		const array3 = [1, 2, 3];
+		expect(_.intersection(array1, array2, array3)).not.toBe(array1);
+		expect(array1).toEqual([1, 2, 3]);
+		expect(array2).toEqual([1, 2, 3]);
+		expect(array3).toEqual([1, 2, 3]);
+	});
+	test('edge cases', () => {
+		expect(_.intersection([], [1], [1])).toEqual([]);
+		expect(_.intersection([true], [true], [])).toEqual([]);
+		expect(_.intersection([null], [null], [null])).toEqual([null]);
+		expect(
+			_.intersection([true, false], [false], [true, false], [false, true])
+		).toEqual([false]);
+	});
+});
