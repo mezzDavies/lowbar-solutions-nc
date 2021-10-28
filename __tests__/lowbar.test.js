@@ -66,21 +66,17 @@ describe('#fromPairs', () => {
   });
 });
 
-describe.only('#times', () => {
-  test('invokes the iteratee n times, returning an array with the results of the invocation', () => {
-    // Without Mocks
-    expect(_.times(1, () => 'a')).toEqual(['a']);
-    expect(_.times(3, () => 'a')).toEqual(['a', 'a', 'a']);
-    // With Mocks
+describe('#times', () => {
+  test('invokes the iteratee n times', () => {
     const mockFunc = jest.fn();
     _.times(3, mockFunc);
     expect(mockFunc).toHaveBeenCalledTimes(3);
   });
+  test('returns an array with the results of the invocation', () => {
+    expect(_.times(1, () => 'a')).toEqual(['a']);
+    expect(_.times(3, () => 'a')).toEqual(['a', 'a', 'a']);
+  });
   test('the iteratee is invoked with one argument, the index', () => {
-    // Without Mocks
-    expect(_.times(1, (index) => index)).toEqual([0]);
-    expect(_.times(3, (index) => index)).toEqual([0, 1, 2]);
-    // With Mocks
     const mockFunc = jest.fn();
     _.times(3, mockFunc);
     expect(mockFunc.mock.calls).toEqual([[0], [1], [2]]);
